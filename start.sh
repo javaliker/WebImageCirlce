@@ -1,6 +1,6 @@
 #!/bin/bash
 
-echo "🚀 WebImageCircle 启动脚本"
+echo "🚀 ImageCircleMaker 启动脚本"
 echo "================================"
 
 # 检查 Node.js 版本
@@ -38,7 +38,7 @@ else
 fi
 
 # 启动项目
-echo "🌐 启动 WebImageCircle..."
+echo "🌐 启动 ImageCircleMaker..."
 echo "访问地址: http://localhost:3000"
 echo "按 Ctrl+C 停止服务"
 echo "================================"

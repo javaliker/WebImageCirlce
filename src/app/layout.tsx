@@ -4,7 +4,7 @@ import { Header } from '@/components/header'
 import { ThemeProvider } from '@/components/theme-provider'
 
 export const metadata: Metadata = {
-  title: 'WebImageCircle - 免费在线圆形头像裁剪工具',
+  title: 'ImageCircleMaker - 免费在线圆形头像裁剪工具',
   description: '免费在线圆形头像裁剪工具，支持微信、微博、Instagram等社交平台。无需注册登录，即开即用，一键生成完美圆形头像。',
   keywords: '圆形头像,头像裁剪,圆形图片,社交媒体头像,微信头像,微博头像,Instagram头像',
 }

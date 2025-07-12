@@ -7,37 +7,16 @@ import { ImageEditor } from '@/components/image-editor'
 export default function HomePage() {
   const [showEditor, setShowEditor] = useState(false)
 
-  if (showEditor) {
-    return (
-      <>
-        <div className="container mx-auto px-4 py-8">
-          <ImageEditor />
-        </div>
-        
-        <footer className="bg-gray-800 text-white py-8 mt-20">
-          <div className="container mx-auto px-4 text-center">
-            <p>&copy; 2024 WebImageCircle. All rights reserved.</p>
-            <p className="mt-2 text-gray-400">免费在线圆形头像制作工具</p>
-          </div>
-        </footer>
-      </>
-    )
-  }
-
   return (
     <>
       <div className="container mx-auto px-4 py-20">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            WebImageCircle
+            ImageCircleMaker
             <span className="block text-2xl md:text-3xl font-normal text-blue-600 dark:text-blue-400 mt-2">
               免费在线圆形头像制作工具
             </span>
           </h1>
-          
-          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-            无需注册，即开即用，支持微信、微博、Instagram等主流平台
-          </p>
           
           <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
             <Button 
@@ -50,6 +29,11 @@ export default function HomePage() {
               查看使用教程
             </Button>
           </div>
+          {showEditor && (
+            <div className="mt-8 mb-16">
+              <ImageEditor />
+            </div>
+          )}
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
             <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
@@ -129,16 +113,25 @@ export default function HomePage() {
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
               无需注册，免费使用，保护隐私
             </p>
-            <Button className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg">
+            <Button 
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg"
+              onClick={() => setShowEditor(true)}
+            >
               开始制作
             </Button>
           </div>
         </div>
+        {/* 编辑器区域 */}
+        {showEditor && (
+          <div className="mt-24">
+            <ImageEditor />
+          </div>
+        )}
       </div>
       
       <footer className="bg-gray-800 text-white py-8 mt-20">
         <div className="container mx-auto px-4 text-center">
-          <p>&copy; 2024 WebImageCircle. All rights reserved.</p>
+          <p>&copy; 2024 ImageCircleMaker. All rights reserved.</p>
           <p className="mt-2 text-gray-400">免费在线圆形头像制作工具</p>
         </div>
       </footer>

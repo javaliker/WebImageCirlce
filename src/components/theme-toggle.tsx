@@ -11,12 +11,12 @@ export function ThemeToggle() {
   useEffect(() => {
     setMounted(true)
     // 从localStorage获取保存的主题
-    const savedTheme = localStorage.getItem('webimagecircle-theme') as Theme
+    const savedTheme = localStorage.getItem('imagecirclemaker-theme') as Theme
     setCurrentTheme(savedTheme || 'system')
     
     // 监听主题变化事件
     const handleThemeChange = () => {
-      const savedTheme = localStorage.getItem('webimagecircle-theme') as Theme
+      const savedTheme = localStorage.getItem('imagecirclemaker-theme') as Theme
       setCurrentTheme(savedTheme || 'system')
     }
     

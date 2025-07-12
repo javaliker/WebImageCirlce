@@ -1,6 +1,6 @@
 export type Theme = 'light' | 'dark' | 'system'
 
-const THEME_STORAGE_KEY = 'webimagecircle-theme'
+const THEME_STORAGE_KEY = 'imagecirclemaker-theme'
 
 // 获取系统主题偏好
 export function getSystemTheme(): 'light' | 'dark' {

@@ -44,12 +44,12 @@ export function CircleCrop({
       setImgSize({ width: img.width, height: img.height })
       setImgLoaded(true)
       
-      // 计算合适的初始位置和缩放比例
+      // scale默认为1（原图大小），只在图片比画布小的时候才放大
       let initialScale = 1
-      if (img.width > size || img.height > size) {
+      if (img.width < size && img.height < size) {
         const scaleX = size / img.width
         const scaleY = size / img.height
-        initialScale = Math.min(scaleX, scaleY) * 0.8 // 留一些边距
+        initialScale = Math.min(scaleX, scaleY, 1)
       }
       // 居中定位（基于缩放后尺寸）
       const scaledWidth = img.width * initialScale
@@ -185,12 +185,12 @@ export function CircleCrop({
   }, [cropData, onCropChange])
 
   const handleReset = useCallback(() => {
-    // 使用与初始化相同的逻辑
+    // scale默认为1（原图大小），只在图片比画布小的时候才放大
     let resetScale = 1
-    if (imgSize.width > size || imgSize.height > size) {
+    if (imgSize.width < size && imgSize.height < size) {
       const scaleX = size / imgSize.width
       const scaleY = size / imgSize.height
-      resetScale = Math.min(scaleX, scaleY) * 0.8
+      resetScale = Math.min(scaleX, scaleY, 1)
     }
     const scaledWidth = imgSize.width * resetScale
     const scaledHeight = imgSize.height * resetScale

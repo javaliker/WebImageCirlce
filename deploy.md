@@ -1,4 +1,4 @@
-# WebImageCircle 部署指南
+# ImageCircleMaker 部署指南
 
 ## 快速开始
 
@@ -36,7 +36,7 @@ npm start
 1. 构建项目：`npm run build`
 2. 上传 `.next` 文件夹到服务器
 3. 安装 PM2：`npm install -g pm2`
-4. 启动：`pm2 start npm --name "webimagecircle" -- start`
+4. 启动：`pm2 start npm --name "imagecirclemaker" -- start`
 
 ## 环境变量
 
@@ -143,11 +143,11 @@ NEXT_PUBLIC_GA_ID=your-google-analytics-id
 npm run dev
 
 # 生产环境
-pm2 logs webimagecircle
+pm2 logs imagecirclemaker
 ```
 
 ## 联系支持
 
-- 技术支持：tech@webimagecircle.com
-- 反馈建议：support@webimagecircle.com
-- 商务合作：business@webimagecircle.com 
+- 技术支持：tech@imagecirclemaker.com
+- 反馈建议：support@imagecirclemaker.com
+- 商务合作：business@imagecirclemaker.com 
