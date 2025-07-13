@@ -22,28 +22,28 @@ export default function HomePage() {
     }
   }
 
-  // 在组件完全挂载前，使用默认的中文文本，防止水合不匹配
+  // 在组件完全挂载前，使用默认的英文文本，防止水合不匹配
   const getText = (key: string) => {
     if (!mounted) {
-      // 返回默认的中文文本
+      // 返回默认的英文文本
       const defaultTexts: Record<string, string> = {
         'home.hero.title': 'ImageCircleMaker',
-        'home.hero.subtitle': '免费在线圆形头像制作工具',
-        'home.hero.description': '无需注册，即开即用，支持微信、微博、Instagram等主流平台',
-        'home.hero.startButton': '上传图片/Upload Image',
-        'home.whatIs.title': '什么是 ImageCircleMaker？',
-        'home.whatIs.subtitle': '专业的圆形头像制作工具',
-        'home.whatIs.description': 'ImageCircleMaker 是一款免费的在线工具，专门用于制作完美的圆形头像。无论您需要为社交媒体、专业平台还是个人使用制作头像，我们都能为您提供最佳的解决方案。',
-        'home.features.title': '为什么选择我们？',
-        'home.features.subtitle': '专业功能，简单易用',
-        'home.howTo.title': '如何使用？',
-        'home.howTo.subtitle': '简单三步，轻松制作',
-        'home.faq.title': '常见问题',
-        'home.faq.subtitle': '解答您的疑问',
-        'home.cta.title': '开始制作您的圆形头像',
-        'home.cta.subtitle': '立即体验，无需注册',
-        'home.cta.button': '开始制作',
-        'home.seo.title': '关于圆形头像制作',
+        'home.hero.subtitle': 'Free Online Circle Avatar Maker',
+        'home.hero.description': 'Professional circle avatar cropping tool designed for social media users, supporting Instagram, LinkedIn, Facebook and 20+ platforms. All images processed locally to protect your privacy.',
+        'home.hero.startButton': 'Upload Image',
+        'home.whatIs.title': 'What is ImageCircleMaker?',
+        'home.whatIs.subtitle': 'Professional circle avatar maker for your social media presence',
+        'home.whatIs.description': 'Easily create perfect circle avatars for social media, professional platforms, or personal use.',
+        'home.features.title': 'Why Choose Us?',
+        'home.features.subtitle': 'Professional features, simple to use',
+        'home.howTo.title': 'How to Use?',
+        'home.howTo.subtitle': 'Simple three steps, easy to make',
+        'home.faq.title': 'Frequently Asked Questions',
+        'home.faq.subtitle': 'Answer your questions',
+        'home.cta.title': 'Start Making Your Circle Avatar',
+        'home.cta.subtitle': 'Experience immediately, no registration required',
+        'home.cta.button': 'Start Making',
+        'home.seo.title': 'About Circle Avatar Making',
         'footer.privacy': 'Privacy',
         'footer.terms': 'Terms',
         'footer.contact': 'Contact'

@@ -6,19 +6,19 @@ import { useLanguage } from '@/contexts/LanguageContext'
 export function ContactContent() {
   const { t, mounted } = useLanguage()
 
-  // 在组件完全挂载前，使用默认的中文文本，防止水合不匹配
+  // 在组件完全挂载前，使用默认的英文文本，防止水合不匹配
   const getText = (key: string) => {
     if (!mounted) {
-      // 返回默认的中文文本
+      // 返回默认的英文文本
       const defaultTexts: Record<string, string> = {
-        'contact.title': '联系我们',
-        'contact.subtitle': '我们随时为您提供帮助和支持',
-        'contact.info.title': '联系方式',
-        'contact.info.email.title': '邮箱',
-        'contact.info.email.description': '发送邮件给我们',
-        'contact.faq.title': '常见问题',
-        'contact.faq.subtitle': '查看我们的FAQ页面获取更多帮助',
-        'contact.faq.link': '查看FAQ',
+        'contact.title': 'Contact Us',
+        'contact.subtitle': 'We are always here to help and support you',
+        'contact.info.title': 'Contact Information',
+        'contact.info.email.title': 'Email',
+        'contact.info.email.description': 'Send us an email',
+        'contact.faq.title': 'Frequently Asked Questions',
+        'contact.faq.subtitle': 'Check our FAQ page for more help',
+        'contact.faq.link': 'View FAQ',
       }
       return defaultTexts[key] || key
     }

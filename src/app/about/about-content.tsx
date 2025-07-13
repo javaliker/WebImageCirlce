@@ -6,27 +6,27 @@ import { useLanguage } from '@/contexts/LanguageContext'
 export function AboutContent() {
   const { t, mounted } = useLanguage()
 
-  // 在组件完全挂载前，使用默认的中文文本，防止水合不匹配
+  // 在组件完全挂载前，使用默认的英文文本，防止水合不匹配
   const getText = (key: string) => {
     if (!mounted) {
-      // 返回默认的中文文本
+      // 返回默认的英文文本
       const defaultTexts: Record<string, string> = {
-        'about.title': '关于 ImageCircleMaker',
-        'about.subtitle': '我们致力于为用户提供最好的圆形头像制作体验',
-        'about.story.title': '我们的故事',
-        'about.team.title': '专业团队',
-        'about.team.description': '我们是一支充满激情的团队，专注于为用户创造简单易用的工具。',
-        'about.mission.title': '我们的使命',
-        'about.mission.description': '让每个人都能轻松制作出完美的圆形头像，无需复杂的技术知识。',
-        'about.values.title': '我们的价值观',
-        'about.values.items.0.title': '用户至上',
-        'about.values.items.0.description': '始终将用户体验放在首位',
-        'about.values.items.1.title': '简单易用',
-        'about.values.items.1.description': '复杂的功能，简单的操作',
-        'about.values.items.2.title': '免费开放',
-        'about.values.items.2.description': '为所有人提供免费的工具',
-        'about.values.items.3.title': '持续创新',
-        'about.values.items.3.description': '不断改进，追求卓越'
+        'about.title': 'About ImageCircleMaker',
+        'about.subtitle': 'We are committed to providing users with the best circle avatar making experience',
+        'about.story.title': 'Our Story',
+        'about.team.title': 'Professional Team',
+        'about.team.description': 'We are a passionate team focused on creating simple and easy-to-use tools for users.',
+        'about.mission.title': 'Our Mission',
+        'about.mission.description': 'Let everyone easily create perfect circle avatars without complex technical knowledge.',
+        'about.values.title': 'Our Values',
+        'about.values.items.0.title': 'User First',
+        'about.values.items.0.description': 'Always put user experience first',
+        'about.values.items.1.title': 'Simple to Use',
+        'about.values.items.1.description': 'Complex features, simple operations',
+        'about.values.items.2.title': 'Free and Open',
+        'about.values.items.2.description': 'Provide free tools for everyone',
+        'about.values.items.3.title': 'Continuous Innovation',
+        'about.values.items.3.description': 'Keep improving, pursue excellence'
       }
       return defaultTexts[key] || key
     }
