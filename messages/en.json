@@ -350,5 +350,10 @@
     "title": "Blog",
     "subtitle": "Insights, updates, and stories from the ImageCircleMaker team",
     "readMore": "Read more"
+  },
+  "meta": {
+    "title": "ImageCircleMaker - Free Online Circular Avatar Cropping Tool",
+    "description": "Free online circular avatar cropping tool, supporting Instagram, LinkedIn, Facebook and other international platforms. No registration required, ready to use, one-click generation of perfect circular avatars.",
+    "keywords": "circular avatar,avatar cropping,circular image,social media avatar,Instagram avatar,LinkedIn avatar,Facebook avatar"
   }
 } 

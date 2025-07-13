@@ -356,5 +356,10 @@
       "size": "尺寸",
       "quality": "质量"
     }
+  },
+  "meta": {
+    "title": "ImageCircleMaker - 免费在线圆形头像裁剪工具",
+    "description": "免费在线圆形头像裁剪工具，支持Instagram、LinkedIn、Facebook等国际平台。无需注册登录，即开即用，一键生成完美圆形头像。",
+    "keywords": "圆形头像,头像裁剪,圆形图片,社交媒体头像,Instagram头像,LinkedIn头像,Facebook头像"
   }
 } 

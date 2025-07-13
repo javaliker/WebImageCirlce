@@ -3,54 +3,58 @@ import './globals.css'
 import { Header } from '@/components/header'
 import { ThemeProvider } from '@/components/theme-provider'
 import { LanguageProvider } from '@/contexts/LanguageContext'
+import { MetadataUpdater } from '@/components/MetadataUpdater'
 
-export const metadata: Metadata = {
-  title: 'ImageCircleMaker - 免费在线圆形头像裁剪工具',
-  description: '免费在线圆形头像裁剪工具，支持Instagram、LinkedIn、Facebook等国际平台。无需注册登录，即开即用，一键生成完美圆形头像。',
-  keywords: '圆形头像,头像裁剪,圆形图片,社交媒体头像,Instagram头像,LinkedIn头像,Facebook头像',
-  alternates: {
-    canonical: 'https://imagecirclemaker.com',
-  },
-  openGraph: {
-    title: 'ImageCircleMaker - 免费在线圆形头像裁剪工具',
-    description: '免费在线圆形头像裁剪工具，支持Instagram、LinkedIn、Facebook等国际平台。无需注册登录，即开即用，一键生成完美圆形头像。',
-    url: 'https://imagecirclemaker.com',
-    siteName: 'ImageCircleMaker',
-    type: 'website',
-    locale: 'zh_CN',
-  },
-  twitter: {
-    card: 'summary_large_image',
-    title: 'ImageCircleMaker - 免费在线圆形头像裁剪工具',
-    description: '免费在线圆形头像裁剪工具，支持Instagram、LinkedIn、Facebook等国际平台。',
-  },
-  robots: {
-    index: true,
-    follow: true,
-    googleBot: {
+// 默认返回英文 metadata，客户端组件会动态更新
+export async function generateMetadata(): Promise<Metadata> {
+  return {
+    title: 'ImageCircleMaker - Free Online Circular Avatar Cropping Tool',
+    description: 'Free online circular avatar cropping tool, supporting Instagram, LinkedIn, Facebook and other international platforms. No registration required, ready to use, one-click generation of perfect circular avatars.',
+    keywords: 'circular avatar,avatar cropping,circular image,social media avatar,Instagram avatar,LinkedIn avatar,Facebook avatar',
+    alternates: {
+      canonical: 'https://imagecirclemaker.com',
+    },
+    openGraph: {
+      title: 'ImageCircleMaker - Free Online Circular Avatar Cropping Tool',
+      description: 'Free online circular avatar cropping tool, supporting Instagram, LinkedIn, Facebook and other international platforms. No registration required, ready to use, one-click generation of perfect circular avatars.',
+      url: 'https://imagecirclemaker.com',
+      siteName: 'ImageCircleMaker',
+      type: 'website',
+      locale: 'en_US',
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title: 'ImageCircleMaker - Free Online Circular Avatar Cropping Tool',
+      description: 'Free online circular avatar cropping tool, supporting Instagram, LinkedIn, Facebook and other international platforms.',
+    },
+    robots: {
       index: true,
       follow: true,
-      'max-video-preview': -1,
-      'max-image-preview': 'large',
-      'max-snippet': -1,
+      googleBot: {
+        index: true,
+        follow: true,
+        'max-video-preview': -1,
+        'max-image-preview': 'large',
+        'max-snippet': -1,
+      },
     },
-  },
-  icons: {
-    icon: [
-      { url: '/favicon.ico', sizes: 'any' },
-      { url: '/favicon.svg', type: 'image/svg+xml' },
-      { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
-      { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
-    ],
-    apple: [
-      { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
-    ],
-    other: [
-      { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
-      { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
-    ],
-  },
-  manifest: '/site.webmanifest',
+    icons: {
+      icon: [
+        { url: '/favicon.ico', sizes: 'any' },
+        { url: '/favicon.svg', type: 'image/svg+xml' },
+        { url: '/favicon-16x16.png', sizes: '16x16', type: 'image/png' },
+        { url: '/favicon-32x32.png', sizes: '32x32', type: 'image/png' },
+      ],
+      apple: [
+        { url: '/apple-touch-icon.png', sizes: '180x180', type: 'image/png' },
+      ],
+      other: [
+        { url: '/android-chrome-192x192.png', sizes: '192x192', type: 'image/png' },
+        { url: '/android-chrome-512x512.png', sizes: '512x512', type: 'image/png' },
+      ],
+    },
+    manifest: '/site.webmanifest',
+  }
 }
 
 export default function RootLayout({
@@ -58,27 +62,33 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
-  const structuredData = {
+  // 动态生成结构化数据
+  const generateStructuredData = (isEnglish: boolean) => ({
     "@context": "https://schema.org",
     "@type": "WebApplication",
     "name": "ImageCircleMaker",
-    "description": "免费在线圆形头像裁剪工具，支持Instagram、LinkedIn、Facebook、Twitter等国际社交平台。",
+    "description": isEnglish 
+      ? "Free online circular avatar cropping tool, supporting Instagram, LinkedIn, Facebook, Twitter and other international social platforms."
+      : "免费在线圆形头像裁剪工具，支持Instagram、LinkedIn、Facebook、Twitter等国际社交平台。",
     "url": "https://imagecirclemaker.com",
     "applicationCategory": "MultimediaApplication",
     "operatingSystem": "Web Browser",
     "offers": {
       "@type": "Offer",
       "price": "0",
-      "priceCurrency": "CNY"
+      "priceCurrency": isEnglish ? "USD" : "CNY"
     },
     "creator": {
       "@type": "Organization",
       "name": "ImageCircleMaker"
     }
-  }
+  })
+
+  // 默认使用英文，客户端组件会动态更新
+  const structuredData = generateStructuredData(true)
 
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -108,6 +118,7 @@ export default function RootLayout({
       <body>
         <ThemeProvider>
           <LanguageProvider>
+            <MetadataUpdater />
             <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 dark:from-gray-900 dark:to-gray-800 transition-colors duration-300">
               <Header />
               {children}
