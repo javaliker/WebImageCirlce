@@ -1,32 +1,103 @@
 'use client'
 
-import { useState } from 'react'
+import React, { useState } from 'react'
 import { Button } from '@/components/ui/button'
 import { ImageEditor } from '@/components/image-editor'
+import { Shield, Download, Palette, Smartphone, Zap, Eye, Settings, Globe, Upload } from 'lucide-react'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 export default function HomePage() {
   const [showEditor, setShowEditor] = useState(false)
+  const [activeFAQ, setActiveFAQ] = useState<number | null>(null)
+  const { t, mounted } = useLanguage()
+
+  const toggleFAQ = (index: number) => {
+    setActiveFAQ(activeFAQ === index ? null : index)
+  }
+
+  const scrollToHowTo = () => {
+    const howToSection = document.getElementById('how-to-section')
+    if (howToSection) {
+      howToSection.scrollIntoView({ behavior: 'smooth' })
+    }
+  }
+
+  // 在组件完全挂载前，使用默认的中文文本，防止水合不匹配
+  const getText = (key: string) => {
+    if (!mounted) {
+      // 返回默认的中文文本
+      const defaultTexts: Record<string, string> = {
+        'home.hero.title': 'ImageCircleMaker',
+        'home.hero.subtitle': '免费在线圆形头像制作工具',
+        'home.hero.description': '无需注册，即开即用，支持微信、微博、Instagram等主流平台',
+        'home.hero.startButton': '上传图片/Upload Image',
+        'home.whatIs.title': '什么是 ImageCircleMaker？',
+        'home.whatIs.subtitle': '专业的圆形头像制作工具',
+        'home.whatIs.description': 'ImageCircleMaker 是一款免费的在线工具，专门用于制作完美的圆形头像。无论您需要为社交媒体、专业平台还是个人使用制作头像，我们都能为您提供最佳的解决方案。',
+        'home.features.title': '为什么选择我们？',
+        'home.features.subtitle': '专业功能，简单易用',
+        'home.howTo.title': '如何使用？',
+        'home.howTo.subtitle': '简单三步，轻松制作',
+        'home.faq.title': '常见问题',
+        'home.faq.subtitle': '解答您的疑问',
+        'home.cta.title': '开始制作您的圆形头像',
+        'home.cta.subtitle': '立即体验，无需注册',
+        'home.cta.button': '开始制作',
+        'home.seo.title': '关于圆形头像制作',
+        'footer.privacy': 'Privacy',
+        'footer.terms': 'Terms',
+        'footer.contact': 'Contact'
+      }
+      return defaultTexts[key] || key
+    }
+    return t(key)
+  }
+
+  // 处理URL锚点跳转
+  React.useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hash = window.location.hash
+      if (hash === '#faq-section') {
+        setTimeout(() => {
+          const faqSection = document.getElementById('faq-section')
+          if (faqSection) {
+            faqSection.scrollIntoView({ behavior: 'smooth' })
+          }
+        }, 100)
+      } else if (hash === '#how-to-section') {
+        setTimeout(() => {
+          const howToSection = document.getElementById('how-to-section')
+          if (howToSection) {
+            howToSection.scrollIntoView({ behavior: 'smooth' })
+          }
+        }, 100)
+      }
+    }
+  }, [])
 
   return (
     <>
       <div className="container mx-auto px-4 py-20">
         <div className="text-center max-w-4xl mx-auto">
           <h1 className="text-4xl md:text-6xl font-bold text-gray-900 dark:text-white mb-6">
-            ImageCircleMaker
+            {getText('home.hero.title')}
             <span className="block text-2xl md:text-3xl font-normal text-blue-600 dark:text-blue-400 mt-2">
-              免费在线圆形头像制作工具
+              {getText('home.hero.subtitle')}
             </span>
           </h1>
           
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-12">
+          <p className="text-xl text-gray-600 dark:text-gray-300 mb-8 max-w-3xl mx-auto">
+            {getText('home.hero.description')}
+          </p>
+          
+          <div className="flex justify-center mb-12">
             <Button 
               onClick={() => setShowEditor(true)}
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-12 rounded-lg text-lg shadow-lg flex items-center gap-2 min-w-[220px]"
+              size="lg"
             >
-              开始制作圆形头像
-            </Button>
-            <Button variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 font-semibold py-3 px-8 rounded-lg text-lg">
-              查看使用教程
+              <Upload className="w-5 h-5 mr-2" />
+              {getText('home.hero.startButton')}
             </Button>
           </div>
           {showEditor && (
@@ -34,105 +105,161 @@ export default function HomePage() {
               <ImageEditor />
             </div>
           )}
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-20">
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 mx-auto">
-                🔒
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">无需注册</h3>
-              <p className="text-gray-600 dark:text-gray-300">即开即用，保护隐私，所有图片在本地处理</p>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 mx-auto">
-                🌍
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">多平台支持</h3>
-              <p className="text-gray-600 dark:text-gray-300">微信、微博、Instagram、LinkedIn等20+平台</p>
-            </div>
-            
-            <div className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg">
-              <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900 rounded-lg flex items-center justify-center text-blue-600 dark:text-blue-400 mb-4 mx-auto">
-                🎨
-              </div>
-              <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">专业编辑</h3>
-              <p className="text-gray-600 dark:text-gray-300">滤镜、边框、尺寸调整等丰富功能</p>
-            </div>
+
+        </div>
+
+        {/* What is 产品介绍区 */}
+        <section className="mt-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{getText('home.whatIs.title')}</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300 mb-6">{getText('home.whatIs.subtitle')}</p>
+            <p className="text-lg text-gray-600 dark:text-gray-300 max-w-4xl mx-auto leading-relaxed">
+              {getText('home.whatIs.description')}
+            </p>
+          </div>
+        </section>
+
+        {/* 功能特色区 */}
+        <section className="mt-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{getText('home.features.title')}</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">{getText('home.features.subtitle')}</p>
           </div>
           
-          <div className="mt-20">
-            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-8">如何使用？</h2>
-            <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white mx-auto mb-4">
-                  1
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {['home.features.items.0', 'home.features.items.1', 'home.features.items.2', 'home.features.items.3', 'home.features.items.4', 'home.features.items.5', 'home.features.items.6', 'home.features.items.7'].map((key, index) => {
+              const icons = [Shield, Download, Palette, Smartphone, Zap, Eye, Settings, Globe]
+              const colors = [
+                'bg-blue-100 dark:bg-blue-900/20 text-blue-600 dark:text-blue-400',
+                'bg-green-100 dark:bg-green-900/20 text-green-600 dark:text-green-400',
+                'bg-purple-100 dark:bg-purple-900/20 text-purple-600 dark:text-purple-400',
+                'bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-400',
+                'bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-400',
+                'bg-indigo-100 dark:bg-indigo-900/20 text-indigo-600 dark:text-indigo-400',
+                'bg-pink-100 dark:bg-pink-900/20 text-pink-600 dark:text-pink-400',
+                'bg-yellow-100 dark:bg-yellow-900/20 text-yellow-600 dark:text-yellow-400'
+              ]
+              const IconComponent = icons[index]
+
+              return (
+                <div key={index} className="bg-white dark:bg-gray-800 rounded-lg p-6 shadow-lg hover:shadow-xl transition-shadow">
+                  <div className={`w-12 h-12 ${colors[index]} rounded-lg flex items-center justify-center mb-4 mx-auto`}>
+                    <IconComponent className="w-6 h-6" />
+                  </div>
+                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">{mounted ? t(`${key}.title`) : key}</h3>
+                  <p className="text-gray-600 dark:text-gray-300">{mounted ? t(`${key}.description`) : ''}</p>
                 </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">上传图片</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">支持拖拽、点击、粘贴</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white mx-auto mb-4">
-                  2
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">选择尺寸</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">平台预设尺寸</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white mx-auto mb-4">
-                  3
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">调整裁剪</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">拖拽缩放调整</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white mx-auto mb-4">
-                  4
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">应用滤镜</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">选择滤镜效果</p>
-              </div>
-              
-              <div className="text-center">
-                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white mx-auto mb-4">
-                  5
-                </div>
-                <h3 className="font-semibold text-gray-900 dark:text-white mb-2">预览下载</h3>
-                <p className="text-gray-600 dark:text-gray-300 text-sm">查看效果下载</p>
-              </div>
-            </div>
+              )
+            })}
+          </div>
+        </section>
+          
+        {/* 完善使用教程区 */}
+        <section id="how-to-section" className="mt-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{getText('home.howTo.title')}</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">{getText('home.howTo.subtitle')}</p>
           </div>
           
-          <div className="mt-20 text-center">
+          <div className="max-w-4xl mx-auto grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {[1, 2, 3, 4].map((step) => (
+              <div key={step} className="text-center">
+                <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center text-white text-2xl font-bold mx-auto mb-4">
+                  {step}
+                </div>
+                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                  {mounted ? t(`home.howTo.steps.${step - 1}.title`) : `步骤 ${step}`}
+                </h3>
+                <p className="text-gray-600 dark:text-gray-300">
+                  {mounted ? t(`home.howTo.steps.${step - 1}.description`) : ''}
+                </p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section id="faq-section" className="mt-20">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">{getText('home.faq.title')}</h2>
+            <p className="text-xl text-gray-600 dark:text-gray-300">{getText('home.faq.subtitle')}</p>
+          </div>
+          
+          <div className="max-w-4xl mx-auto space-y-4">
+            {['home.faq.items.0', 'home.faq.items.1', 'home.faq.items.2', 'home.faq.items.3', 'home.faq.items.4', 'home.faq.items.5', 'home.faq.items.6', 'home.faq.items.7', 'home.faq.items.8'].map((key, index) => (
+              <div key={index} className="bg-white dark:bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+                <button
+                  className="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors"
+                  onClick={() => toggleFAQ(index)}
+                >
+                  <span className="font-semibold text-gray-900 dark:text-white">{mounted ? t(`${key}.question`) : `问题 ${index + 1}`}</span>
+                  <span className={`text-blue-600 dark:text-blue-400 transition-transform ${activeFAQ === index ? 'rotate-180' : ''}`}>
+                    ▼
+                  </span>
+                </button>
+                {activeFAQ === index && (
+                  <div className="px-6 pb-4">
+                    <p className="text-gray-600 dark:text-gray-300">{mounted ? t(`${key}.answer`) : ''}</p>
+                  </div>
+                )}
+              </div>
+            ))}
+          </div>
+        </section>
+          
+        {/* 再次CTA区 */}
+        <section className="mt-20">
+          <div className="text-center max-w-4xl mx-auto">
             <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-4">
-              立即开始制作您的圆形头像
+              {getText('home.cta.title')}
             </h2>
             <p className="text-xl text-gray-600 dark:text-gray-300 mb-8">
-              无需注册，免费使用，保护隐私
+              {getText('home.cta.subtitle')}
             </p>
-            <Button 
-              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-8 rounded-lg text-lg"
-              onClick={() => setShowEditor(true)}
-            >
-              开始制作
-            </Button>
+            <div className="flex justify-center">
+              <Button 
+                onClick={() => {
+                  setShowEditor(true)
+                  // 滚动到hero区域
+                  setTimeout(() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                  }, 100)
+                }}
+                className="bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 px-12 rounded-lg text-lg shadow-lg flex items-center gap-2 min-w-[220px]"
+                size="lg"
+              >
+                <Upload className="w-5 h-5 mr-2" />
+                {getText('home.hero.startButton')}
+              </Button>
+            </div>
           </div>
-        </div>
-        {/* 编辑器区域 */}
-        {showEditor && (
-          <div className="mt-24">
-            <ImageEditor />
+        </section>
+
+        {/* SEO文本区块 */}
+        <section className="mt-20 max-w-4xl mx-auto">
+          <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-8">
+            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-6">{getText('home.seo.title')}</h2>
+            <div className="prose dark:prose-invert max-w-none text-gray-700 dark:text-gray-300 space-y-4">
+              {['home.seo.content.0', 'home.seo.content.1', 'home.seo.content.2', 'home.seo.content.3'].map((key, index) => (
+                <p key={index}>
+                  {mounted ? t(key) : ''}
+                </p>
+              ))}
+            </div>
           </div>
-        )}
+        </section>
       </div>
+      
+
       
       <footer className="bg-gray-800 text-white py-8 mt-20">
         <div className="container mx-auto px-4 text-center">
           <p>&copy; 2024 ImageCircleMaker. All rights reserved.</p>
-          <p className="mt-2 text-gray-400">免费在线圆形头像制作工具</p>
+          <p className="mt-2 text-gray-400">{getText('home.hero.subtitle')}</p>
+          <div className="mt-4 flex justify-center space-x-6 text-sm text-gray-400">
+            <a href="/privacy" className="hover:text-white underline" title={getText('footer.privacy')}>{getText('footer.privacy')}</a>
+            <a href="/terms" className="hover:text-white underline" title={getText('footer.terms')}>{getText('footer.terms')}</a>
+            <a href="/contact" className="hover:text-white underline" title={getText('footer.contact')}>{getText('footer.contact')}</a>
+          </div>
         </div>
       </footer>
     </>

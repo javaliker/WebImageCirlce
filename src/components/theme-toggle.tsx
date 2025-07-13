@@ -5,19 +5,19 @@ import { Button } from '@/components/ui/button'
 import { Theme, getCurrentTheme, setTheme, getNextTheme, getThemeIcon } from '@/lib/theme'
 
 export function ThemeToggle() {
-  const [currentTheme, setCurrentTheme] = useState<Theme>('system')
+  const [currentTheme, setCurrentTheme] = useState<Theme>('light')
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
     setMounted(true)
     // 从localStorage获取保存的主题
     const savedTheme = localStorage.getItem('imagecirclemaker-theme') as Theme
-    setCurrentTheme(savedTheme || 'system')
+    setCurrentTheme(savedTheme || 'light')
     
     // 监听主题变化事件
     const handleThemeChange = () => {
       const savedTheme = localStorage.getItem('imagecirclemaker-theme') as Theme
-      setCurrentTheme(savedTheme || 'system')
+      setCurrentTheme(savedTheme || 'light')
     }
     
     window.addEventListener('theme-change', handleThemeChange)
@@ -66,7 +66,7 @@ export function ThemeToggle() {
       size="icon"
       onClick={handleThemeToggle}
       className="w-10 h-10 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
-      title={`切换主题 (Ctrl+T) - 当前: ${currentTheme === 'system' ? '跟随系统' : currentTheme === 'light' ? '浅色' : '深色'}`}
+      title={`切换主题 (Ctrl+T) - 当前: ${currentTheme === 'light' ? '浅色' : '深色'}`}
     >
       <span className="text-lg transition-transform hover:scale-110">
         {getThemeIcon(currentTheme)}

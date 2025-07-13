@@ -153,10 +153,11 @@
 }
 
 /* 反馈按钮悬浮样式 */
-.feedback-button {
+/* .feedback-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
+  left: auto;
   z-index: 1000;
   animation: bounce 2s infinite;
 }
@@ -171,4 +172,4 @@
   60% {
     transform: translateY(-5px);
   }
-} 
+} */ 

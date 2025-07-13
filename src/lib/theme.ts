@@ -1,22 +1,13 @@
-export type Theme = 'light' | 'dark' | 'system'
+// 主题类型
+export type Theme = 'light' | 'dark'
 
+// 主题存储键
 const THEME_STORAGE_KEY = 'imagecirclemaker-theme'
 
-// 获取系统主题偏好
-export function getSystemTheme(): 'light' | 'dark' {
-  if (typeof window === 'undefined') return 'light'
-  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
-}
-
 // 获取当前主题
-export function getCurrentTheme(): 'light' | 'dark' {
+export function getCurrentTheme(): Theme {
   if (typeof window === 'undefined') return 'light'
-  
-  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme
-  if (savedTheme === 'system') {
-    return getSystemTheme()
-  }
-  return savedTheme || 'light'
+  return (localStorage.getItem(THEME_STORAGE_KEY) as Theme) || 'light'
 }
 
 // 设置主题
@@ -25,54 +16,26 @@ export function setTheme(theme: Theme) {
   
   localStorage.setItem(THEME_STORAGE_KEY, theme)
   
-  const currentTheme = theme === 'system' ? getSystemTheme() : theme
-  document.documentElement.classList.toggle('dark', currentTheme === 'dark')
+  document.documentElement.classList.toggle('dark', theme === 'dark')
   
   // 触发自定义事件，通知其他组件主题变化
-  window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme: currentTheme } }))
+  window.dispatchEvent(new CustomEvent('theme-change', { detail: { theme } }))
+}
+
+// 获取下一个主题
+export function getNextTheme(currentTheme: Theme): Theme {
+  return currentTheme === 'light' ? 'dark' : 'light'
+}
+
+// 获取主题图标
+export function getThemeIcon(theme: Theme): string {
+  return theme === 'light' ? '☀️' : '🌙'
 }
 
 // 初始化主题
 export function initializeTheme() {
   if (typeof window === 'undefined') return
   
-  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY) as Theme
-  const theme = savedTheme || 'system'
-  setTheme(theme)
-  
-  // 监听系统主题变化
-  const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)')
-  mediaQuery.addEventListener('change', () => {
-    if (savedTheme === 'system') {
-      setTheme('system')
-    }
-  })
-}
-
-// 获取主题图标
-export function getThemeIcon(theme: Theme): string {
-  switch (theme) {
-    case 'light':
-      return '☀️'
-    case 'dark':
-      return '🌙'
-    case 'system':
-      return '🖥️'
-    default:
-      return '☀️'
-  }
-}
-
-// 获取下一个主题
-export function getNextTheme(currentTheme: Theme): Theme {
-  switch (currentTheme) {
-    case 'light':
-      return 'dark'
-    case 'dark':
-      return 'system'
-    case 'system':
-      return 'light'
-    default:
-      return 'light'
-  }
+  const savedTheme = getCurrentTheme()
+  setTheme(savedTheme)
 } 

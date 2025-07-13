@@ -1,8 +1,9 @@
 'use client'
 
-import { useState, useRef, useCallback, useEffect } from 'react'
+import { useState, useRef, useCallback, useEffect, forwardRef, useImperativeHandle } from 'react'
 import { Upload, X, Image as ImageIcon } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ImageUploadProps {
   onImageSelect: (file: File) => void
@@ -13,30 +14,42 @@ interface ImageUploadProps {
 const DEFAULT_MAX_SIZE = 10 // 10MB
 const DEFAULT_ACCEPTED_FORMATS = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml']
 
-export function ImageUpload({ 
+export const ImageUpload = forwardRef(function ImageUpload({ 
   onImageSelect, 
   maxSize = DEFAULT_MAX_SIZE, 
   acceptedFormats = DEFAULT_ACCEPTED_FORMATS 
-}: ImageUploadProps) {
+}: ImageUploadProps, ref) {
+  const { t } = useLanguage()
   const [isDragOver, setIsDragOver] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
+  // 暴露open方法给父组件
+  useImperativeHandle(ref, () => ({
+    open: () => {
+      if (fileInputRef.current) {
+        fileInputRef.current.value = '' // 重置value，确保即使选择同一文件也能触发onChange
+        fileInputRef.current.click()
+      }
+    }
+  }))
+
   // 验证文件
   const validateFile = useCallback((file: File): string | null => {
     // 检查文件格式
     if (!acceptedFormats.includes(file.type)) {
-      return `不支持的文件格式。支持的格式：${acceptedFormats.map(f => f.split('/')[1]).join(', ')}`
+      const formats = acceptedFormats.map(f => f.split('/')[1]).join(', ')
+      return t('editor.upload.errors.unsupportedFormat').replace('{formats}', formats)
     }
 
     // 检查文件大小
     if (file.size > maxSize * 1024 * 1024) {
-      return `文件大小不能超过 ${maxSize}MB`
+      return t('editor.upload.errors.fileTooLarge').replace('{maxSize}', maxSize.toString())
     }
 
     return null
-  }, [acceptedFormats, maxSize])
+  }, [acceptedFormats, maxSize, t])
 
   // 处理文件选择
   const handleFileSelect = useCallback((file: File) => {
@@ -91,6 +104,8 @@ export function ImageUpload({
     if (file) {
       handleFileSelect(file)
     }
+    // 重置input的value，确保下次选择同一文件也能触发onChange
+    e.target.value = ''
   }, [handleFileSelect])
 
   // 处理粘贴事件
@@ -142,7 +157,7 @@ export function ImageUpload({
           </Button>
         </div>
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
-          点击右上角 X 重新选择图片
+          {t('editor.upload.previewText')}
         </p>
       </div>
     )
@@ -178,22 +193,22 @@ export function ImageUpload({
           
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-              上传图片
+              {t('editor.upload.uploadButton')}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
-              拖拽图片到此处，或点击选择文件
+              {t('editor.upload.dragText')}
             </p>
             
             <div className="space-y-2 text-sm text-gray-500 dark:text-gray-400">
-              <p>支持格式：JPG、PNG、GIF、WebP、SVG</p>
-              <p>最大文件大小：{maxSize}MB</p>
-              <p>提示：也可以按 Ctrl+V 粘贴图片</p>
+              <p>{t('editor.upload.supportedFormats')}</p>
+              <p>{t('editor.upload.maxSize')}</p>
+              <p>{t('editor.upload.pasteTip')}</p>
             </div>
           </div>
           
           <Button className="bg-blue-600 hover:bg-blue-700 text-white">
             <Upload className="w-4 h-4 mr-2" />
-            选择图片
+            {t('editor.upload.uploadButton')}
           </Button>
         </div>
       </div>
@@ -205,4 +220,4 @@ export function ImageUpload({
       )}
     </div>
   )
-} 
+}) 

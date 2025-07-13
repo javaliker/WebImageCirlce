@@ -3,6 +3,8 @@
 import { useState, useRef, useCallback, useEffect } from 'react'
 import { Move, ZoomIn, ZoomOut, RotateCcw } from 'lucide-react'
 import { Button } from '@/components/ui/button'
+import * as Slider from '@radix-ui/react-slider'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface CircleCropProps {
   imageSrc: string
@@ -24,6 +26,7 @@ export function CircleCrop({
   onCropChange, 
   size = DEFAULT_SIZE 
 }: CircleCropProps) {
+  const { t } = useLanguage()
   const [cropData, setCropData] = useState<CropData>({
     x: 0,
     y: 0,
@@ -154,7 +157,8 @@ export function CircleCrop({
 
   // 处理滚轮缩放
   const handleWheel = useCallback((e: React.WheelEvent) => {
-    e.preventDefault()
+    e.preventDefault();
+    e.stopPropagation(); // 防止事件冒泡到外层
     const delta = e.deltaY > 0 ? 0.9 : 1.1
     const newScale = Math.max(0.1, Math.min(3, cropData.scale * delta))
     const newCropData = { ...cropData, scale: newScale }
@@ -207,7 +211,7 @@ export function CircleCrop({
   }, [])
 
   return (
-    <div className="flex justify-center items-center">
+    <div className="flex flex-col items-center justify-center">
       {/* 隐藏的图片元素用于绘制 */}
       <img
         ref={imageRef}
@@ -217,7 +221,7 @@ export function CircleCrop({
         onLoad={() => setImgLoaded(true)}
       />
       {/* 裁剪预览区域 */}
-      <div className="relative mx-auto">
+      <div className="relative mx-auto overscroll-contain">
         <canvas
           ref={canvasRef}
           width={size}
@@ -231,20 +235,62 @@ export function CircleCrop({
         />
         {/* 操作提示 */}
         <div className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
-          拖拽移动 · 滚轮缩放 · 右键旋转
+          {t('editor.crop.tips')}
         </div>
       </div>
-      {/* 控制按钮和信息 */}
-      <div className="flex flex-col items-center ml-6 space-y-2">
-        <div className="flex space-x-2 mb-2">
-          <Button variant="outline" size="sm" onClick={handleZoomOut} title="缩小"><ZoomOut className="w-4 h-4" /></Button>
-          <Button variant="outline" size="sm" onClick={handleZoomIn} title="放大"><ZoomIn className="w-4 h-4" /></Button>
-          <Button variant="outline" size="sm" onClick={handleRotate} title="旋转90度"><RotateCcw className="w-4 h-4" /></Button>
-          <Button variant="outline" size="sm" onClick={handleReset} title="重置">重置</Button>
+      {/* 控制按钮整体居中 */}
+      <div className="flex flex-col items-center mt-6 space-y-4 w-full max-w-md">
+        <div className="flex space-x-2 mb-2 justify-center">
+          <Button variant="outline" size="sm" onClick={handleZoomOut} title={t('editor.crop.zoomOut')}><ZoomOut className="w-4 h-4" /></Button>
+          <Button variant="outline" size="sm" onClick={handleZoomIn} title={t('editor.crop.zoomIn')}><ZoomIn className="w-4 h-4" /></Button>
+          <Button variant="outline" size="sm" onClick={handleRotate} title={t('editor.crop.rotate')}><RotateCcw className="w-4 h-4" /></Button>
+          <Button variant="outline" size="sm" onClick={handleReset} title={t('editor.crop.reset')}>{t('editor.crop.reset')}</Button>
         </div>
-        <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-          <p>缩放: {Math.round(cropData.scale * 100)}%</p>
-          <p>旋转: {cropData.rotation}°</p>
+        {/* 缩放滑杆 */}
+        <div className="flex flex-col items-center" style={{ width: size }}>
+          <Slider.Root
+            className="relative flex items-center select-none touch-none w-full h-8"
+            min={0.1}
+            max={3}
+            step={0.01}
+            value={[cropData.scale]}
+            onValueChange={([val]) => {
+              const newCropData = { ...cropData, scale: val }
+              setCropData(newCropData)
+              onCropChange(newCropData)
+            }}
+            aria-label="缩放"
+            onWheel={e => e.preventDefault()}
+          >
+            <Slider.Track className="bg-gray-200 dark:bg-gray-700 relative grow rounded-full h-2">
+              <Slider.Range className="absolute bg-blue-500 rounded-full h-2" />
+            </Slider.Track>
+            <Slider.Thumb className="block w-5 h-5 bg-white border-2 border-blue-500 rounded-full shadow focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </Slider.Root>
+          <div className="text-xs text-gray-500 mt-1 w-full text-center">{t('editor.crop.scale')}: {Math.round(cropData.scale * 100)}%</div>
+        </div>
+        {/* 旋转滑杆 */}
+        <div className="flex flex-col items-center mt-2" style={{ width: size }}>
+          <Slider.Root
+            className="relative flex items-center select-none touch-none w-full h-8"
+            min={0}
+            max={360}
+            step={1}
+            value={[cropData.rotation]}
+            onValueChange={([val]) => {
+              const newCropData = { ...cropData, rotation: val }
+              setCropData(newCropData)
+              onCropChange(newCropData)
+            }}
+            aria-label="旋转"
+            onWheel={e => e.preventDefault()}
+          >
+            <Slider.Track className="bg-gray-200 dark:bg-gray-700 relative grow rounded-full h-2">
+              <Slider.Range className="absolute bg-blue-500 rounded-full h-2" />
+            </Slider.Track>
+            <Slider.Thumb className="block w-5 h-5 bg-white border-2 border-blue-500 rounded-full shadow focus:outline-none focus:ring-2 focus:ring-blue-400" />
+          </Slider.Root>
+          <div className="text-xs text-gray-500 mt-1 w-full text-center">{t('editor.crop.rotation')}: {cropData.rotation}°</div>
         </div>
       </div>
     </div>

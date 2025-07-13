@@ -4,6 +4,7 @@ import { useState, useRef, useCallback } from 'react'
 import { Download, Settings, Check } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { CropData } from './circle-crop'
+import { useLanguage } from '@/contexts/LanguageContext'
 
 interface ImageExportProps {
   originalImage: File
@@ -20,6 +21,7 @@ interface ExportSettings {
 }
 
 export function ImageExport({ originalImage, cropData, size }: ImageExportProps) {
+  const { t } = useLanguage()
   const [exportSettings, setExportSettings] = useState<ExportSettings>({
     format: 'png',
     quality: 0.9,
@@ -27,7 +29,10 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
   })
   const [isExporting, setIsExporting] = useState(false)
   const [exportedImageUrl, setExportedImageUrl] = useState<string | null>(null)
+  const [customSize, setCustomSize] = useState<number>(300)
+  const [useCustomSize, setUseCustomSize] = useState<boolean>(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  const customSizeInputRef = useRef<HTMLInputElement>(null)
 
   // 导出图片
   const exportImage = useCallback(async () => {
@@ -47,47 +52,29 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
       // 创建图片对象
       const img = new Image()
       img.onload = () => {
-        // 清空画布
         ctx.clearRect(0, 0, exportSettings.size, exportSettings.size)
-
-        // 创建圆形裁剪路径
         ctx.save()
         ctx.beginPath()
-        ctx.arc(
-          exportSettings.size / 2, 
-          exportSettings.size / 2, 
-          exportSettings.size / 2, 
-          0, 
-          2 * Math.PI
-        )
+        ctx.arc(exportSettings.size / 2, exportSettings.size / 2, exportSettings.size / 2, 0, 2 * Math.PI)
         ctx.clip()
-
-        // 应用变换
         ctx.save()
         ctx.translate(exportSettings.size / 2, exportSettings.size / 2)
         ctx.rotate((cropData.rotation * Math.PI) / 180)
-        ctx.scale(cropData.scale, cropData.scale)
         ctx.translate(-exportSettings.size / 2, -exportSettings.size / 2)
-
-        // 绘制图片
+        // 计算缩放比例（如果导出尺寸和裁剪区尺寸不一致，需要缩放 cropData）
+        const scaleRatio = exportSettings.size / size;
         ctx.drawImage(
           img,
-          cropData.x,
-          cropData.y,
-          size,
-          size,
-          0,
-          0,
-          exportSettings.size,
-          exportSettings.size
-        )
-
-        ctx.restore()
-        ctx.restore()
-
+          0, 0, img.width, img.height,
+          cropData.x * scaleRatio,
+          cropData.y * scaleRatio,
+          img.width * cropData.scale * scaleRatio,
+          img.height * cropData.scale * scaleRatio
+        );
+        ctx.restore();
+        ctx.restore();
         // 导出图片
         let dataUrl: string
-        
         if (exportSettings.format === 'png') {
           dataUrl = canvas.toDataURL('image/png')
         } else if (exportSettings.format === 'jpg') {
@@ -95,7 +82,6 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
         } else {
           dataUrl = canvas.toDataURL('image/webp', exportSettings.quality)
         }
-
         setExportedImageUrl(dataUrl)
         setIsExporting(false)
       }
@@ -131,7 +117,7 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
         <div className="flex items-center gap-2 mb-4">
           <Settings className="w-5 h-5 text-gray-600 dark:text-gray-400" />
           <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-            导出设置
+            {t('editor.export.settings')}
           </h3>
         </div>
 
@@ -139,23 +125,23 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
           {/* 格式选择 */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              导出格式
+              {t('editor.export.format')}
             </label>
             <select
               value={exportSettings.format}
               onChange={(e) => updateExportSettings({ format: e.target.value as ExportFormat })}
               className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
             >
-              <option value="png">PNG (透明背景)</option>
-              <option value="jpg">JPG (高质量)</option>
-              <option value="webp">WebP (现代格式)</option>
+              <option value="png">{t('editor.export.formats.png')}</option>
+              <option value="jpg">{t('editor.export.formats.jpg')}</option>
+              <option value="webp">{t('editor.export.formats.webp')}</option>
             </select>
           </div>
 
           {/* 质量设置 */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              质量: {Math.round(exportSettings.quality * 100)}%
+              {t('editor.export.quality')}: {Math.round(exportSettings.quality * 100)}%
             </label>
             <input
               type="range"
@@ -171,20 +157,70 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
           {/* 尺寸设置 */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-              导出尺寸
+              {t('editor.export.size')}
             </label>
-            <select
-              value={exportSettings.size}
-              onChange={(e) => updateExportSettings({ size: parseInt(e.target.value) })}
-              className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-            >
-              <option value={132}>微信头像 (132x132)</option>
-              <option value={180}>微博头像 (180x180)</option>
-              <option value={150}>Instagram (150x150)</option>
-              <option value={400}>LinkedIn (400x400)</option>
-              <option value={200}>抖音头像 (200x200)</option>
-              <option value={300}>自定义 (300x300)</option>
-            </select>
+            <div className="space-y-2">
+              <select
+                value={useCustomSize ? 'custom' : exportSettings.size}
+                onChange={(e) => {
+                  if (e.target.value === 'custom') {
+                    setUseCustomSize(true)
+                    updateExportSettings({ size: customSize })
+                  } else {
+                    setUseCustomSize(false)
+                    updateExportSettings({ size: parseInt(e.target.value) })
+                  }
+                }}
+                className="w-full px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              >
+                <option value={150}>{t('editor.export.sizes.instagram')}</option>
+                <option value={400}>{t('editor.export.sizes.linkedin')}</option>
+                <option value={170}>{t('editor.export.sizes.facebook')}</option>
+                <option value={400}>{t('editor.export.sizes.twitter')}</option>
+                <option value={200}>{t('editor.export.sizes.tiktok')}</option>
+                <option value={800}>{t('editor.export.sizes.youtube')}</option>
+                <option value={128}>{t('editor.export.sizes.discord')}</option>
+                <option value={512}>{t('editor.export.sizes.telegram')}</option>
+                <option value={192}>{t('editor.export.sizes.whatsapp')}</option>
+                <option value={320}>{t('editor.export.sizes.snapchat')}</option>
+                <option value={165}>{t('editor.export.sizes.pinterest')}</option>
+                <option value={256}>{t('editor.export.sizes.reddit')}</option>
+                <option value={400}>{t('editor.export.sizes.github')}</option>
+                <option value={512}>{t('editor.export.sizes.slack')}</option>
+                <option value={96}>{t('editor.export.sizes.zoom')}</option>
+                <option value={400}>{t('editor.export.sizes.resume')}</option>
+                <option value={300}>{t('editor.export.sizes.website')}</option>
+                <option value="custom">{t('editor.export.sizes.custom')}</option>
+              </select>
+              
+              {useCustomSize && (
+                <div className="flex items-center space-x-2">
+                  <input
+                    ref={customSizeInputRef}
+                    type="number"
+                    min="50"
+                    max="2000"
+                    value={customSize}
+                    onChange={(e) => {
+                      const value = parseInt(e.target.value) || 300
+                      setCustomSize(value)
+                      updateExportSettings({ size: value })
+                    }}
+                    onFocus={() => {
+                      // 使用setTimeout确保在DOM更新后执行选中
+                      setTimeout(() => {
+                        if (customSizeInputRef.current) {
+                          customSizeInputRef.current.select()
+                        }
+                      }, 0)
+                    }}
+                    className="flex-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    placeholder={t('editor.export.customSize') + ' (50-2000)'}
+                  />
+                  <span className="text-sm text-gray-500 dark:text-gray-400">px</span>
+                </div>
+              )}
+            </div>
           </div>
         </div>
 
@@ -198,12 +234,12 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
             {isExporting ? (
               <>
                 <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-white mr-2"></div>
-                正在导出...
+                {t('editor.export.exporting')}
               </>
             ) : (
               <>
                 <Download className="w-4 h-4 mr-2" />
-                生成圆形头像
+                {t('editor.export.exportButton')}
               </>
             )}
           </Button>
@@ -216,7 +252,7 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
           <div className="flex items-center gap-2 mb-4">
             <Check className="w-5 h-5 text-green-600" />
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
-              导出成功
+              {t('editor.export.success')}
             </h3>
           </div>
 
@@ -224,7 +260,7 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
             {/* 预览 */}
             <div className="flex-1">
               <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                预览效果
+                {t('editor.export.preview')}
               </h4>
               <div className="w-32 h-32 mx-auto">
                 <img
@@ -238,12 +274,12 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
             {/* 下载信息 */}
             <div className="flex-1">
               <h4 className="text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
-                文件信息
+                {t('editor.export.fileInfo')}
               </h4>
               <div className="space-y-2 text-sm text-gray-600 dark:text-gray-400">
-                <p>格式: {exportSettings.format.toUpperCase()}</p>
-                <p>尺寸: {exportSettings.size} x {exportSettings.size}px</p>
-                <p>质量: {Math.round(exportSettings.quality * 100)}%</p>
+                <p>{t('editor.export.format')}: {exportSettings.format.toUpperCase()}</p>
+                <p>{t('editor.export.size')}: {exportSettings.size} x {exportSettings.size}px</p>
+                <p>{t('editor.export.quality')}: {Math.round(exportSettings.quality * 100)}%</p>
               </div>
 
               <Button
@@ -251,7 +287,7 @@ export function ImageExport({ originalImage, cropData, size }: ImageExportProps)
                 className="mt-4 bg-green-600 hover:bg-green-700 text-white"
               >
                 <Download className="w-4 h-4 mr-2" />
-                下载头像
+                {t('editor.export.downloadButton')}
               </Button>
             </div>
           </div>

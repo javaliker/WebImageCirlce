@@ -1,0 +1,354 @@
+{
+  "home": {
+    "hero": {
+      "title": "ImageCircleMaker",
+      "subtitle": "Free Online Circular Avatar Maker",
+      "description": "Professional circular avatar cropping tool designed for social media users, supporting Instagram, LinkedIn, Facebook and 20+ platforms. All images processed locally to protect your privacy and security. Quickly create high-quality circular avatars to enhance your social media presence.",
+      "startButton": "Upload Image",
+      "tutorialButton": "View Tutorial"
+    },
+    "whatIs": {
+      "title": "What is ImageCircleMaker?",
+      "subtitle": "Professional circular avatar maker tool",
+      "description": "Easily create perfect circular avatars for your social media, professional platforms, or personal use with ImageCircleMaker.",
+      "productDefinition": {
+        "title": "Product Definition",
+        "content": "ImageCircleMaker is a free online circular avatar cropping tool designed for social media users. We are committed to providing users with simple, efficient, and professional circular avatar creation experience, allowing everyone to easily create perfect circular avatars that meet the needs of various social media platforms."
+      },
+      "targetUsers": {
+        "title": "Target Users",
+        "users": {
+          "0": "Social Media Individual Users",
+          "1": "Enterprise Brand Marketing Personnel",
+          "2": "Content Creators and Influencers",
+          "3": "Designers and Photographers",
+          "4": "Students and Educators"
+        }
+      },
+      "coreValues": {
+        "title": "Core Values",
+        "values": {
+          "0": {
+            "title": "Privacy & Security",
+            "description": "Local processing, protecting user data"
+          },
+          "1": {
+            "title": "Professional Quality",
+            "description": "High-quality output, meeting professional needs"
+          },
+          "2": {
+            "title": "Easy to Use",
+            "description": "No registration required, ready to use"
+          },
+          "3": {
+            "title": "Comprehensive Compatibility",
+            "description": "Support 20+ platform sizes"
+          }
+        }
+      }
+    },
+          "features": {
+        "title": "Why Choose ImageCircleMaker?",
+        "subtitle": "Professional, secure, and convenient circular avatar creation experience to make your social media presence more professional",
+        "items": {
+          "0": {
+            "title": "Privacy & Security",
+            "description": "No registration required, all images processed locally, never uploaded to servers"
+          },
+          "1": {
+            "title": "Multi-Platform Support",
+            "description": "Instagram, LinkedIn, Facebook, Twitter and 20+ international platform sizes"
+          },
+          "2": {
+            "title": "Professional Editing",
+            "description": "Filters, borders, size adjustments and rich features to create perfect circular avatars"
+          },
+          "3": {
+            "title": "Fast Processing",
+            "description": "Ready to use, no download required, supports drag and drop upload"
+          },
+          "4": {
+            "title": "Multi-Format Export",
+            "description": "Support PNG, JPG, WebP formats to meet different platform needs"
+          },
+          "5": {
+            "title": "Responsive Design",
+            "description": "Perfectly adapts to phones, tablets, and computers, create circular avatars anytime, anywhere"
+          },
+          "6": {
+            "title": "Real-time Preview",
+            "description": "What you see is what you get, real-time preview of editing effects"
+          },
+          "7": {
+            "title": "Custom Sizes",
+            "description": "Support custom sizes to meet special requirements"
+          }
+        }
+      },
+    "howTo": {
+      "title": "How to Use?",
+      "subtitle": "Simple four steps to easily create professional circular avatars and make your social media presence more outstanding",
+      "steps": {
+        "0": {
+          "title": "Upload Image",
+          "description": "Support drag and drop, click to select, paste and other upload methods, compatible with JPG, PNG, WebP and other mainstream formats",
+          "tip": "💡 Tip: It's recommended to use high-definition images for the best results"
+        },
+        "1": {
+          "title": "Select Size",
+          "description": "Choose from 20+ international platform preset sizes, or customize sizes to meet special requirements",
+          "tip": "💡 Tip: Different platforms have different requirements for avatar sizes"
+        },
+        "2": {
+          "title": "Adjust Crop",
+          "description": "Drag and zoom to adjust the crop area, apply filter effects, create perfect circular avatars, ensuring the best visual effects",
+          "tip": "💡 Tip: You can adjust multiple times until satisfied"
+        },
+        "3": {
+          "title": "Preview & Download",
+          "description": "Real-time preview effects, choose appropriate format and quality, download to local with one click",
+          "tip": "💡 Tip: PNG format supports transparent background"
+        }
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Answer your most concerned questions",
+      "items": {
+        "0": {
+          "question": "Will my images be uploaded to the server?",
+          "answer": "No. ImageCircleMaker uses local processing technology. All images are processed in your browser and will not be uploaded to any server, completely protecting your privacy and security."
+        },
+        "1": {
+          "question": "What image formats are supported?",
+          "answer": "We support mainstream image formats such as JPG, PNG, WebP, GIF. It's recommended to use high-definition images for the best results."
+        },
+        "2": {
+          "question": "Can I customize avatar sizes?",
+          "answer": "Yes. In addition to 20+ platform preset sizes, we also support custom size functions to meet your special requirements."
+        },
+        "3": {
+          "question": "What export formats are supported?",
+          "answer": "Support PNG, JPG, WebP three formats. PNG supports transparent background, JPG files are smaller, WebP combines quality and file size advantages."
+        },
+        "4": {
+          "question": "How to choose the right avatar size?",
+          "answer": "Different platforms have different requirements for avatar sizes. We provide detailed platform size descriptions, and you can choose the appropriate size according to your target platform."
+        },
+        "5": {
+          "question": "Can I undo operations during editing?",
+          "answer": "Yes. We provide complete undo/redo functions, and you can adjust editing operations at any time."
+        },
+        "6": {
+          "question": "Do you support batch image processing?",
+          "answer": "Currently supports single image processing. We are developing batch processing functions, please stay tuned."
+        },
+        "7": {
+          "question": "What should I do if I encounter problems during use?",
+          "answer": "You can check our usage tutorial, or get technical support through the contact page. We will reply to your questions within 24 hours."
+        },
+        "8": {
+          "question": "What's the difference between circular and square avatars?",
+          "answer": "Circular avatars are visually softer and more friendly, suitable for most social media platforms. Our tool specifically optimizes the cropping algorithm for circular avatars to ensure the best display effects."
+        }
+      }
+    },
+    "cta": {
+      "title": "Start Creating Your Circular Avatar Now",
+      "subtitle": "No registration required, free to use, privacy protected, quickly create professional circular avatars",
+      "button": "Start Creating"
+    },
+    "seo": {
+      "title": "About ImageCircleMaker",
+      "content": {
+        "0": "ImageCircleMaker is a free online circular avatar cropping tool designed for social media users. Whether you need to create professional circular avatars for Instagram, LinkedIn, Facebook, Twitter, YouTube, TikTok and other platforms, we can provide you with perfect solutions.",
+        "1": "Our tool uses advanced local processing technology to ensure your image privacy and security. All image processing is completed in your browser and will not be uploaded to any server. At the same time, we support multiple image formats and export options, allowing you to easily create high-quality circular avatars that meet the needs of various social media platforms.",
+        "2": "As a professional circular avatar creation tool, ImageCircleMaker provides rich editing functions, including intelligent cropping, filter effects, border decoration, etc. Our platform size library covers 20+ international mainstream social platforms, ensuring your circular avatars can be perfectly displayed on various platforms.",
+        "3": "Whether you are an individual user, enterprise user, or content creator, ImageCircleMaker can meet your needs. Our tool is completely free to use, no registration required, ready to use, allowing you to quickly create professional-level circular avatars and enhance your social media presence."
+      }
+    }
+  },
+  "nav": {
+    "home": "Home",
+    "help": "Help",
+    "faq": "FAQ",
+    "about": "About",
+    "contact": "Contact",
+    "blog": "Blog"
+  },
+  "about": {
+    "title": "About ImageCircleMaker",
+    "subtitle": "A dynamic and innovative team, long-term focused on creating user-satisfying products",
+    "story": {
+      "title": "Our Story",
+      "content": {
+        "0": "ImageCircleMaker was born in 2024, founded by a group of passionate young developers. We noticed the challenges social media users face when creating circular avatars—either needing to download complex software, pay for online tools, or worry about privacy and security issues.",
+        "1": "Based on these pain points, we decided to create a completely free, privacy-secure, and powerful online circular avatar creation tool. Our team brings together professionals from frontend development, UI/UX design, product management, and other fields, each passionate about creating excellent product experiences.",
+        "2": "From the initial concept to the current product, we have always adhered to the user-first philosophy, continuously iterating and optimizing, just to provide users with the best experience. We believe that good products should be simple to use, powerful, and completely free."
+      }
+    },
+    "team": {
+      "title": "Innovation Team",
+      "description": "Composed of experienced developers and designers, committed to creating products that users love"
+    },
+    "mission": {
+      "title": "Our Mission",
+      "description": "Enable everyone to easily create professional-level circular avatars, without complex technical knowledge, without worrying about privacy and security, making social media presence more outstanding."
+    },
+    "vision": {
+      "title": "Our Vision",
+      "description": "To become one of the world's most popular online image processing tools, providing users with more innovative and practical features, making creation simpler and more fun."
+    },
+    "values": {
+      "title": "Core Values",
+      "subtitle": "Beliefs that guide us forward",
+      "userFirst": {
+        "title": "User First",
+        "description": "Always put user needs first, listen to user feedback, continuously improve product experience"
+      },
+      "innovation": {
+        "title": "Innovation Driven",
+        "description": "Embrace new technologies, pursue innovation, provide better solutions for users"
+      },
+      "quality": {
+        "title": "Quality Assurance",
+        "description": "Pursue excellence, ensure every feature is carefully designed and tested"
+      }
+    },
+    "technology": {
+      "title": "Technical Advantages",
+      "frontend": {
+        "title": "Frontend Technology Stack",
+        "items": {
+          "0": "Adopt modern web technologies to ensure optimal performance",
+          "1": "Responsive design, perfectly adapts to various devices",
+          "2": "Local processing technology, protects user privacy"
+        }
+      },
+      "optimization": {
+        "title": "Continuous Optimization",
+        "items": {
+          "0": "Regular feature updates to meet new user needs",
+          "1": "Performance monitoring and optimization to ensure smooth experience",
+          "2": "User feedback driven, rapid iteration and improvement",
+          "3": "Security updates to protect user data"
+        }
+      }
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We'd love to hear from you and are always here to help",
+    "info": {
+      "title": "Contact Information",
+      "email": {
+        "title": "Email Contact",
+        "description": "We usually respond within 24 hours"
+      },
+      "hours": {
+        "title": "Service Hours",
+        "description": "24/7 Online Service"
+      },
+      "address": {
+        "title": "Company Address",
+        "location": "United Kingdom",
+        "description": "Remote work team"
+      }
+    },
+    "faq": {
+      "title": "Frequently Asked Questions",
+      "subtitle": "Check our FAQ page for more help",
+      "link": "View FAQ"
+    }
+  },
+  "editor": {
+    "upload": {
+      "title": "Upload Your Image",
+      "subtitle": "Support drag & drop, click or paste to upload images",
+      "step1": "Upload Image",
+      "step2": "Crop & Adjust",
+      "step3": "Export & Download",
+      "uploadButton": "Upload Image",
+      "dragText": "Drag image here, or click to select file",
+      "supportedFormats": "Supported formats: JPG, PNG, GIF, WebP, SVG",
+      "maxSize": "Max file size: 10MB",
+      "previewText": "Click X in top right to reselect image",
+      "errors": {
+        "unsupportedFormat": "Unsupported file format. Supported formats: {formats}",
+        "fileTooLarge": "File size cannot exceed {maxSize}MB"
+      },
+      "pasteTip": "Tip: You can also press Ctrl+V to paste an image"
+    },
+    "crop": {
+      "title": "Adjust Circular Crop",
+      "subtitle": "Drag to move image, scroll to zoom, buttons to rotate",
+      "reselectButton": "Reselect Image",
+      "nextButton": "Next: Export Avatar",
+      "tips": "Drag to move · Scroll to zoom · Right click to rotate",
+      "zoomOut": "Zoom Out",
+      "zoomIn": "Zoom In",
+      "rotate": "Rotate 90°",
+      "reset": "Reset",
+      "scale": "Scale",
+      "rotation": "Rotation"
+    },
+    "export": {
+      "title": "Export Circular Avatar",
+      "subtitle": "Choose format, quality and size to generate perfect avatar",
+      "settings": "Export Settings",
+      "format": "Export Format",
+      "quality": "Quality",
+      "size": "Export Size",
+      "customSize": "Custom Size",
+      "formats": {
+        "png": "PNG (Transparent Background)",
+        "jpg": "JPG (High Quality)",
+        "webp": "WebP (Modern Format)"
+      },
+      "sizes": {
+        "instagram": "Instagram (150x150)",
+        "linkedin": "LinkedIn (400x400)",
+        "facebook": "Facebook (170x170)",
+        "twitter": "Twitter/X (400x400)",
+        "tiktok": "TikTok (200x200)",
+        "youtube": "YouTube (800x800)",
+        "discord": "Discord (128x128)",
+        "telegram": "Telegram (512x512)",
+        "whatsapp": "WhatsApp (192x192)",
+        "snapchat": "Snapchat (320x320)",
+        "pinterest": "Pinterest (165x165)",
+        "reddit": "Reddit (256x256)",
+        "github": "GitHub (400x400)",
+        "slack": "Slack (512x512)",
+        "zoom": "Zoom (96x96)",
+        "resume": "Resume/Business Card (400x400)",
+        "website": "Website/Corporate Email (300x300)",
+        "custom": "Custom Size"
+      },
+      "exportButton": "Export Avatar",
+      "downloadButton": "Download Avatar",
+      "restartButton": "Create New Avatar",
+      "exporting": "Exporting...",
+      "exportError": "Export failed",
+      "success": "Export Successful",
+      "preview": "Preview",
+      "fileInfo": "File Info",
+      "format": "Format",
+      "size": "Size",
+      "quality": "Quality"
+    }
+  },
+  "header": {
+    "slogan": "Circular Avatar Maker"
+  },
+  "footer": {
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "contact": "Contact Us"
+  },
+  "blog": {
+    "title": "Blog",
+    "subtitle": "Insights, updates, and stories from the ImageCircleMaker team",
+    "readMore": "Read more"
+  }
+} 
