@@ -355,5 +355,187 @@
     "title": "ImageCircleMaker - Free Online Circular Avatar Cropping Tool",
     "description": "Free online circular avatar cropping tool, supporting Instagram, LinkedIn, Facebook and other international platforms. No registration required, ready to use, one-click generation of perfect circular avatars.",
     "keywords": "circular avatar,avatar cropping,circular image,social media avatar,Instagram avatar,LinkedIn avatar,Facebook avatar"
+  },
+  "privacy": {
+    "title": "Privacy Policy",
+    "description": "Learn how ImageCircleMaker protects your privacy and data security",
+    "lastUpdated": "Last updated: December 2024",
+    "sections": {
+      "collection": {
+        "title": "1. Information Collection",
+        "description": "ImageCircleMaker is committed to protecting your privacy. The information we collect includes:",
+        "items": {
+          "0": "Usage Data: How you use our services, including feature usage and performance data",
+          "1": "Technical Information: Browser type, operating system, IP address, etc.",
+          "2": "Image Data: Your uploaded images are processed locally only and will not be uploaded to our servers"
+        }
+      },
+      "usage": {
+        "title": "2. Information Usage",
+        "description": "We use the collected information for:",
+        "items": {
+          "0": "Providing and improving our services",
+          "1": "Analyzing usage patterns to optimize user experience",
+          "2": "Detecting and preventing fraud or abuse",
+          "3": "Complying with legal obligations"
+        }
+      },
+      "protection": {
+        "title": "3. Data Protection",
+        "description": "We take the following measures to protect your data:",
+        "items": {
+          "0": "Local Processing: Your images are processed locally in your browser and will not be uploaded to servers",
+          "1": "Encrypted Transmission: All data transmission is encrypted using HTTPS",
+          "2": "Secure Storage: Server data is protected using industry-standard security measures",
+          "3": "Access Control: Strict restrictions on access to personal data"
+        }
+      },
+      "sharing": {
+        "title": "4. Information Sharing",
+        "description": "We do not sell, trade, or transfer your personal information unless:",
+        "items": {
+          "0": "We have your explicit consent",
+          "1": "Required by law or government agencies",
+          "2": "To protect our rights, property, or safety"
+        }
+      },
+      "cookies": {
+        "title": "5. Cookie Usage",
+        "description": "We use cookies to:",
+        "items": {
+          "0": "Remember your theme preference settings",
+          "1": "Analyze website usage",
+          "2": "Improve user experience"
+        },
+        "note": "You can disable cookies through browser settings, but this may affect the use of certain features."
+      },
+      "rights": {
+        "title": "6. Your Rights",
+        "description": "Under applicable law, you have the right to:",
+        "items": {
+          "0": "Access personal information we hold about you",
+          "1": "Request correction of inaccurate information",
+          "2": "Request deletion of your personal information",
+          "3": "Object to processing of your personal information",
+          "4": "Data portability"
+        }
+      },
+      "contact": {
+        "title": "7. Contact Us",
+        "description": "If you have any questions about this privacy policy or need to exercise your rights, please contact us through:",
+        "email": "Email:",
+        "address": "Address:",
+        "responseTime": "Response Time:",
+        "responseTimeValue": "We will respond within 30 days of receiving your request"
+      },
+      "updates": {
+        "title": "8. Policy Updates",
+        "description": "We may update this privacy policy from time to time. Major changes will be notified to you through website notifications or email. We recommend that you regularly review this policy to understand how we protect your information."
+      }
+    }
+  },
+  "terms": {
+    "title": "Terms of Service",
+    "description": "ImageCircleMaker terms of service and usage conditions",
+    "lastUpdated": "Last updated: December 2024",
+    "sections": {
+      "description": {
+        "title": "1. Service Description",
+        "description": "ImageCircleMaker is an online circular avatar creation tool that provides the following services:",
+        "items": {
+          "0": "Image upload and local processing",
+          "1": "Circular cropping and editing features",
+          "2": "Multi-format export (PNG, JPG, WebP)",
+          "3": "Multi-platform size adaptation",
+          "4": "Theme switching functionality"
+        }
+      },
+      "conditions": {
+        "title": "2. Usage Conditions",
+        "description": "By using our services, you agree to:",
+        "items": {
+          "0": "Comply with all applicable laws and regulations",
+          "1": "Not upload images containing malicious content, pornography, violence, or infringing on others' rights",
+          "2": "Not abuse services or engage in any activities that may harm system performance",
+          "3": "Not attempt to crack, reverse engineer, or interfere with our services",
+          "4": "Be responsible for the content of images you upload, ensuring you have the right to use these images"
+        }
+      },
+      "intellectual": {
+        "title": "3. Intellectual Property",
+        "description": "Regarding intellectual property provisions:",
+        "items": {
+          "0": "Your Images: You retain all rights to uploaded images, and we will not acquire ownership of your images",
+          "1": "Our Services: ImageCircleMaker and related technologies, designs, trademarks, and other intellectual property are owned by us",
+          "2": "Third-party Content: We respect third-party intellectual property rights. If you find infringing content, please contact us promptly"
+        }
+      },
+      "availability": {
+        "title": "4. Service Availability",
+        "description": "We are committed to providing high-quality services, but please note:",
+        "items": {
+          "0": "Services may be temporarily unavailable due to maintenance, updates, or technical issues",
+          "1": "We do not guarantee 100% uninterrupted or error-free service",
+          "2": "We reserve the right to modify, suspend, or terminate services at any time",
+          "3": "Major changes will be notified to users in advance"
+        }
+      },
+      "disclaimer": {
+        "title": "5. Disclaimer",
+        "description": "To the maximum extent permitted by law:",
+        "items": {
+          "0": "We provide services \"as is\" without any express or implied warranties",
+          "1": "We do not guarantee that services will meet your specific needs or expectations",
+          "2": "We are not liable for any direct, indirect, incidental, or special damages arising from the use of services",
+          "3": "You bear the risk of using our services"
+        }
+      },
+      "limitation": {
+        "title": "6. Limitation of Liability",
+        "description": "Our liability limitations:",
+        "items": {
+          "0": "In no event shall our total liability exceed the amount you paid for using the services",
+          "1": "For free services, our liability is limited to $100",
+          "2": "Laws in certain jurisdictions may not allow liability limitations. In such cases, our liability will be limited to the maximum extent permitted by law"
+        }
+      },
+      "termination": {
+        "title": "7. Termination",
+        "description": "Conditions for service termination:",
+        "items": {
+          "0": "You violate any provision of these terms of service",
+          "1": "We decide to discontinue providing services",
+          "2": "Legal requirements mandate service termination",
+          "3": "After termination, your right to use services will cease immediately"
+        }
+      },
+      "disputes": {
+        "title": "8. Dispute Resolution",
+        "description": "Methods for dispute resolution:",
+        "items": {
+          "0": "We encourage resolving disputes through friendly negotiation",
+          "1": "If negotiation fails, disputes will be resolved through arbitration",
+          "2": "Arbitration location and procedures will be determined according to applicable law",
+          "3": "These terms are governed by [applicable law]"
+        }
+      },
+      "modification": {
+        "title": "9. Terms Modification",
+        "description": "We reserve the right to modify these terms of service at any time:",
+        "items": {
+          "0": "Major modifications will be notified to users 30 days in advance",
+          "1": "Continued use of services indicates your acceptance of modified terms",
+          "2": "If you disagree with modifications, please stop using our services"
+        }
+      },
+      "contact": {
+        "title": "10. Contact Us",
+        "description": "If you have any questions or suggestions about these terms of service, please contact us through:",
+        "items": {
+          "0": "Email: contact@imagecirclemaker.com",
+          "1": "We will respond to your inquiries within a reasonable time"
+        }
+      }
+    }
   }
 } 
