@@ -126,6 +126,8 @@ export function CircleCrop({
   // 处理指针事件
   const handlePointerDown = useCallback((e: React.PointerEvent) => {
     if (!canvasRef.current) return
+    e.preventDefault() // 防止默认行为
+    e.stopPropagation() // 防止事件冒泡
     setIsDragging(true)
     // 计算指针在canvas内的坐标
     const rect = canvasRef.current.getBoundingClientRect()
@@ -140,6 +142,8 @@ export function CircleCrop({
 
   const handlePointerMove = useCallback((e: React.PointerEvent) => {
     if (!isDragging || !canvasRef.current) return
+    e.preventDefault() // 防止默认行为
+    e.stopPropagation() // 防止事件冒泡
     const rect = canvasRef.current.getBoundingClientRect()
     const pointerX = e.clientX - rect.left
     const pointerY = e.clientY - rect.top
@@ -152,6 +156,8 @@ export function CircleCrop({
   }, [isDragging, dragOffset, cropData, onCropChange])
 
   const handlePointerUp = useCallback((e: React.PointerEvent) => {
+    e.preventDefault() // 防止默认行为
+    e.stopPropagation() // 防止事件冒泡
     setIsDragging(false)
   }, [])
 
@@ -165,6 +171,47 @@ export function CircleCrop({
     setCropData(newCropData)
     onCropChange(newCropData)
   }, [cropData, onCropChange])
+
+  // 处理触摸事件（移动端优化）
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    e.preventDefault() // 防止默认行为
+    e.stopPropagation() // 防止事件冒泡
+    if (!canvasRef.current) return
+    
+    const touch = e.touches[0]
+    const rect = canvasRef.current.getBoundingClientRect()
+    const touchX = touch.clientX - rect.left
+    const touchY = touch.clientY - rect.top
+    
+    setIsDragging(true)
+    setDragOffset({
+      x: touchX - cropData.x,
+      y: touchY - cropData.y
+    })
+  }, [cropData])
+
+  const handleTouchMove = useCallback((e: React.TouchEvent) => {
+    e.preventDefault() // 防止默认行为
+    e.stopPropagation() // 防止事件冒泡
+    if (!isDragging || !canvasRef.current) return
+    
+    const touch = e.touches[0]
+    const rect = canvasRef.current.getBoundingClientRect()
+    const touchX = touch.clientX - rect.left
+    const touchY = touch.clientY - rect.top
+    
+    const newX = touchX - dragOffset.x
+    const newY = touchY - dragOffset.y
+    const newCropData = { ...cropData, x: newX, y: newY }
+    setCropData(newCropData)
+    onCropChange(newCropData)
+  }, [isDragging, dragOffset, cropData, onCropChange])
+
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    e.preventDefault() // 防止默认行为
+    e.stopPropagation() // 防止事件冒泡
+    setIsDragging(false)
+  }, [])
 
   // 控制按钮
   const handleZoomIn = useCallback(() => {
@@ -206,12 +253,14 @@ export function CircleCrop({
   }, [onCropChange, size, imgSize])
 
   // 指针移出canvas也要取消拖动
-  const handlePointerLeave = useCallback(() => {
+  const handlePointerLeave = useCallback((e: React.PointerEvent) => {
+    e.preventDefault() // 防止默认行为
+    e.stopPropagation() // 防止事件冒泡
     setIsDragging(false)
   }, [])
 
   return (
-    <div className="flex flex-col items-center justify-center">
+    <div className="flex flex-col items-center justify-center touch-none">
       {/* 隐藏的图片元素用于绘制 */}
       <img
         ref={imageRef}
@@ -221,17 +270,26 @@ export function CircleCrop({
         onLoad={() => setImgLoaded(true)}
       />
       {/* 裁剪预览区域 */}
-      <div className="relative mx-auto overscroll-contain">
+      <div className="relative mx-auto overscroll-contain touch-none">
         <canvas
           ref={canvasRef}
           width={size}
           height={size}
-          className="border border-gray-300 dark:border-gray-600 rounded-lg cursor-move bg-black/10"
+          className="border border-gray-300 dark:border-gray-600 rounded-lg cursor-move bg-black/10 touch-none select-none"
+          style={{
+            touchAction: 'none', // 禁用默认触摸行为
+            userSelect: 'none', // 禁用文本选择
+            WebkitUserSelect: 'none',
+            WebkitTouchCallout: 'none'
+          }}
           onPointerDown={handlePointerDown}
           onPointerMove={handlePointerMove}
           onPointerUp={handlePointerUp}
           onPointerLeave={handlePointerLeave}
           onWheel={handleWheel}
+          onTouchStart={handleTouchStart}
+          onTouchMove={handleTouchMove}
+          onTouchEnd={handleTouchEnd}
         />
         {/* 操作提示 */}
         <div className="absolute bottom-2 left-2 bg-black/50 text-white text-xs px-2 py-1 rounded">
