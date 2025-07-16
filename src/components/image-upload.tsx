@@ -23,6 +23,7 @@ export const ImageUpload = forwardRef(function ImageUpload({
   const [isDragOver, setIsDragOver] = useState(false)
   const [preview, setPreview] = useState<string | null>(null)
   const [error, setError] = useState<string | null>(null)
+  const [isProcessing, setIsProcessing] = useState(false)
   const fileInputRef = useRef<HTMLInputElement>(null)
 
   // 暴露open方法给父组件
@@ -51,26 +52,90 @@ export const ImageUpload = forwardRef(function ImageUpload({
     return null
   }, [acceptedFormats, maxSize, t])
 
+  // 优化图片质量（针对移动端拍照）
+  const optimizeImage = useCallback((file: File): Promise<File> => {
+    return new Promise((resolve) => {
+      const img = new Image()
+      const canvas = document.createElement('canvas')
+      const ctx = canvas.getContext('2d')
+      
+      img.onload = () => {
+        // 计算最佳预览尺寸（保持宽高比）
+        const maxPreviewSize = 800 // 最大预览尺寸
+        let { width, height } = img
+        
+        // 如果图片尺寸过大，进行缩放
+        if (width > maxPreviewSize || height > maxPreviewSize) {
+          const ratio = Math.min(maxPreviewSize / width, maxPreviewSize / height)
+          width = Math.round(width * ratio)
+          height = Math.round(height * ratio)
+        }
+        
+        // 设置canvas尺寸
+        canvas.width = width
+        canvas.height = height
+        
+        // 绘制图片（使用高质量设置）
+        if (ctx) {
+          // 启用图像平滑
+          ctx.imageSmoothingEnabled = true
+          ctx.imageSmoothingQuality = 'high'
+          
+          // 绘制图片
+          ctx.drawImage(img, 0, 0, width, height)
+        }
+        
+        // 转换为Blob
+        canvas.toBlob((blob) => {
+          if (blob) {
+            // 创建新的File对象
+            const optimizedFile = new File([blob], file.name, {
+              type: file.type,
+              lastModified: Date.now()
+            })
+            resolve(optimizedFile)
+          } else {
+            resolve(file) // 如果转换失败，返回原文件
+          }
+        }, file.type, 0.9) // 保持90%质量
+      }
+      
+      img.src = URL.createObjectURL(file)
+    })
+  }, [])
+
   // 处理文件选择
-  const handleFileSelect = useCallback((file: File) => {
+  const handleFileSelect = useCallback(async (file: File) => {
     setError(null)
+    setIsProcessing(true)
     
-    const validationError = validateFile(file)
-    if (validationError) {
-      setError(validationError)
-      return
-    }
+    try {
+      const validationError = validateFile(file)
+      if (validationError) {
+        setError(validationError)
+        setIsProcessing(false)
+        return
+      }
 
-    // 创建预览
-    const reader = new FileReader()
-    reader.onload = (e) => {
-      setPreview(e.target?.result as string)
-    }
-    reader.readAsDataURL(file)
+      // 优化图片质量（特别是移动端拍照的图片）
+      const optimizedFile = await optimizeImage(file)
+      
+      // 创建预览
+      const reader = new FileReader()
+      reader.onload = (e) => {
+        setPreview(e.target?.result as string)
+        setIsProcessing(false)
+      }
+      reader.readAsDataURL(optimizedFile)
 
-    // 通知父组件
-    onImageSelect(file)
-  }, [validateFile, onImageSelect])
+      // 通知父组件（传递优化后的文件）
+      onImageSelect(optimizedFile)
+    } catch (error) {
+      console.error('图片处理失败:', error)
+      setError('图片处理失败，请重试')
+      setIsProcessing(false)
+    }
+  }, [validateFile, optimizeImage, onImageSelect])
 
   // 处理拖拽事件
   const handleDragOver = useCallback((e: React.DragEvent) => {
@@ -95,8 +160,10 @@ export const ImageUpload = forwardRef(function ImageUpload({
 
   // 处理点击上传
   const handleClickUpload = useCallback(() => {
-    fileInputRef.current?.click()
-  }, [])
+    if (!isProcessing) {
+      fileInputRef.current?.click()
+    }
+  }, [isProcessing])
 
   // 处理文件输入变化
   const handleFileInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement>) => {
@@ -133,6 +200,7 @@ export const ImageUpload = forwardRef(function ImageUpload({
   const clearPreview = useCallback(() => {
     setPreview(null)
     setError(null)
+    setIsProcessing(false)
     if (fileInputRef.current) {
       fileInputRef.current.value = ''
     }
@@ -145,16 +213,27 @@ export const ImageUpload = forwardRef(function ImageUpload({
           <img 
             src={preview} 
             alt="预览" 
-            className="w-full h-64 object-cover rounded-lg border-2 border-gray-200 dark:border-gray-700"
+            className="w-full h-64 md:h-80 object-contain rounded-lg border-2 border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800"
+            style={{
+              imageRendering: '-webkit-optimize-contrast'
+            }}
           />
           <Button
             onClick={clearPreview}
             variant="destructive"
             size="icon"
             className="absolute top-2 right-2 w-8 h-8 rounded-full"
+            disabled={isProcessing}
           >
             <X className="w-4 h-4" />
           </Button>
+          {isProcessing && (
+            <div className="absolute inset-0 bg-black/20 rounded-lg flex items-center justify-center">
+              <div className="bg-white dark:bg-gray-800 rounded-lg px-4 py-2 text-sm">
+                处理中...
+              </div>
+            </div>
+          )}
         </div>
         <p className="text-center text-sm text-gray-500 dark:text-gray-400 mt-2">
           {t('editor.upload.previewText')}
@@ -172,6 +251,7 @@ export const ImageUpload = forwardRef(function ImageUpload({
             ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
             : 'border-gray-300 dark:border-gray-600 hover:border-gray-400 dark:hover:border-gray-500'
           }
+          ${isProcessing ? 'opacity-50 cursor-not-allowed' : ''}
         `}
         onDragOver={handleDragOver}
         onDragLeave={handleDragLeave}
@@ -184,16 +264,21 @@ export const ImageUpload = forwardRef(function ImageUpload({
           accept={acceptedFormats.join(',')}
           onChange={handleFileInputChange}
           className="hidden"
+          capture="environment" // 移动端优先使用后置摄像头
         />
         
         <div className="space-y-4">
           <div className="mx-auto w-16 h-16 bg-gray-100 dark:bg-gray-800 rounded-full flex items-center justify-center">
-            <ImageIcon className="w-8 h-8 text-gray-400" />
+            {isProcessing ? (
+              <div className="w-8 h-8 border-2 border-blue-600 border-t-transparent rounded-full animate-spin"></div>
+            ) : (
+              <ImageIcon className="w-8 h-8 text-gray-400" />
+            )}
           </div>
           
           <div>
             <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-              {t('editor.upload.uploadButton')}
+              {isProcessing ? '处理中...' : t('editor.upload.uploadButton')}
             </h3>
             <p className="text-gray-600 dark:text-gray-400 mb-4">
               {t('editor.upload.dragText')}
@@ -203,12 +288,18 @@ export const ImageUpload = forwardRef(function ImageUpload({
               <p>{t('editor.upload.supportedFormats')}</p>
               <p>{t('editor.upload.maxSize')}</p>
               <p>{t('editor.upload.pasteTip')}</p>
+              <p className="text-blue-600 dark:text-blue-400">
+                💡 移动端拍照自动优化图片质量
+              </p>
             </div>
           </div>
           
-          <Button className="bg-blue-600 hover:bg-blue-700 text-white">
+          <Button 
+            className="bg-blue-600 hover:bg-blue-700 text-white"
+            disabled={isProcessing}
+          >
             <Upload className="w-4 h-4 mr-2" />
-            {t('editor.upload.uploadButton')}
+            {isProcessing ? '处理中...' : t('editor.upload.uploadButton')}
           </Button>
         </div>
       </div>
